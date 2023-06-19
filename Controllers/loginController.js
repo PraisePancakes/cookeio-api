@@ -16,6 +16,4 @@ module.exports = async (req, res) => {
   if (!matched) {
     return res.status(404).send({ message: 'Incorrect Password' });
   }
-
-  return res.status(200).send({ message: 'Logged In' });
 };
