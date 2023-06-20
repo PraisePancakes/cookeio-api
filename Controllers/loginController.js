@@ -1,9 +1,8 @@
 const UserModel = require('../Models/User');
 const bcrypt = require('bcrypt');
-const JWT_SECRET = process.env.SECRET_KEY;
 const jwt = require('jsonwebtoken');
-
 require('dotenv').config();
+const JWT_SECRET = process.env.SECRET_KEY;
 
 module.exports = async (req, res) => {
   const { username, password } = req.body;
@@ -12,6 +11,10 @@ module.exports = async (req, res) => {
 
   if (!userExists) {
     return res.status(404).send({ message: 'User not found!' });
+  } else if (username === '') {
+    return res.status(400).send({ error: 'Please Enter an username' });
+  } else if (password === '') {
+    return res.status(400).send({ error: 'Please Enter an password' });
   }
 
   const matched = await bcrypt.compare(password, userExists.password);
