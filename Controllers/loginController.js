@@ -10,17 +10,13 @@ module.exports = async (req, res) => {
   const userExists = await UserModel.findOne({ username });
 
   if (!userExists) {
-    return res.status(404).send({ message: 'User not found!' });
-  } else if (username === '') {
-    return res.status(400).send({ error: 'Please Enter an username' });
-  } else if (password === '') {
-    return res.status(400).send({ error: 'Please Enter an password' });
+    return res.status(400).send({ message: 'Incorrect username or password' });
   }
 
   const matched = await bcrypt.compare(password, userExists.password);
 
   if (!matched) {
-    return res.status(404).send({ message: 'Incorrect Password' });
+    return res.status(400).send({ message: 'Incorrect username or password' });
   }
 
   const token = jwt.sign(
@@ -34,7 +30,7 @@ module.exports = async (req, res) => {
   );
 
   return res.status(200).send({
-    message: 'Login Successful',
+    message: 'Successfully Logged In!',
     username: userExists.username,
     token,
   });
