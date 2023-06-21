@@ -27,14 +27,15 @@ module.exports = async (req, res) => {
     {
       userId: userExists._id,
       username: userExists.username,
+      clicks: userExists.clicks,
     },
     JWT_SECRET,
-    { expiresIn: '24h' }
+    { expiresIn: '10m' }
   );
 
   return res.status(200).send({
     message: 'Login Successful',
-    uesrname: userExists.username,
+    username: userExists.username,
     token,
   });
 };
