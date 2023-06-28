@@ -23,6 +23,7 @@ module.exports = async (req, res) => {
     {
       userId: userExists._id,
       username: userExists.username,
+      createdAt: userExists.createdAt,
     },
     JWT_SECRET,
     { expiresIn: '10m' }
